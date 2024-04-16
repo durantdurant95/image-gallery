@@ -1,6 +1,8 @@
 import Image from "next/image";
+import { db } from "~/server/db";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const posts = await db.query.posts.findMany();
   const mockUrls = [
     "https://utfs.io/f/bafea2fa-3073-4f34-94f0-c642d1a4a960-tcjfko.jpg",
     "https://utfs.io/f/67ac8133-e37f-48f1-9628-406383bd456a-o6jcr9.jpg",
@@ -21,6 +23,14 @@ export default function HomePage() {
             <Image src={image.url} alt="" fill />
           </div>
         ))}
+      </div>
+      <div>
+        <h1 className="text-2xl font-bold">Posts</h1>
+        <ul>
+          {posts.map((post) => (
+            <li key={post.id}>{post.name}</li>
+          ))}
+        </ul>
       </div>
     </main>
   );
