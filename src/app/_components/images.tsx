@@ -4,10 +4,13 @@ import { getImages } from "~/server/queries";
 export default async function Images() {
   const images = await getImages();
   return (
-    <div className="flex flex-wrap gap-4">
+    <div className="flex flex-wrap justify-center gap-8 px-8">
       {images.map((image) => (
-        <div key={image.id} className="relative h-24 w-48">
-          <Image src={image.url} alt="" fill />
+        <div key={image.id}>
+          <div className="relative h-40 w-80">
+            <Image src={image.url} alt={image.name} fill />
+          </div>
+          <div>{image.name}</div>
         </div>
       ))}
     </div>
