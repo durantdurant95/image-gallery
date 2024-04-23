@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { getImages } from "~/server/queries";
 
 export default async function Images() {
@@ -8,7 +9,9 @@ export default async function Images() {
       {images.map((image) => (
         <div key={image.id}>
           <div className="relative h-40 w-80">
-            <Image src={image.url} alt={image.name} fill />
+            <Link href={`/img/${image.id}`}>
+              <Image src={image.url} alt={image.name} fill />
+            </Link>
           </div>
           <div>{image.name}</div>
         </div>
