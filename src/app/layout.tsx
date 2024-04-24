@@ -38,7 +38,7 @@ export default function RootLayout({
           routerConfig={extractRouterConfig(ourFileRouter)}
         />
         <body
-          className={`font-sans ${inter.variable} duration-20 flex flex-col gap-4 text-slate-950 transition-colors dark:text-primary`}
+          className={`font-sans ${inter.variable} duration-20 flex h-screen flex-col text-slate-950 transition-colors dark:text-primary`}
         >
           <ThemeProvider
             attribute="class"
