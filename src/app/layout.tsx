@@ -1,6 +1,7 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { Inter } from "next/font/google";
+import { ThemeProvider } from "src/app/_components/theme-provider";
 import { extractRouterConfig } from "uploadthing/server";
 import "~/styles/globals.css";
 import TopNav from "./_components/topnav";
@@ -26,7 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <NextSSRPlugin
           /**
            * The `extractRouterConfig` will extract **only** the route configs
@@ -36,11 +37,20 @@ export default function RootLayout({
            */
           routerConfig={extractRouterConfig(ourFileRouter)}
         />
-        <body className={`font-sans ${inter.variable} flex flex-col gap-4`}>
-          <TopNav />
-          {children}
-          {modal}
-          <div id="modal-root" />
+        <body
+          className={`font-sans ${inter.variable} duration-20 flex flex-col gap-4 text-slate-950 transition-colors dark:text-primary`}
+        >
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <TopNav />
+            {children}
+            {modal}
+            <div id="modal-root" />
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
