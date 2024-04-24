@@ -38,7 +38,7 @@ export default function RootLayout({
           routerConfig={extractRouterConfig(ourFileRouter)}
         />
         <body
-          className={`font-sans ${inter.variable} duration-20 flex h-screen flex-col text-slate-950 transition-colors dark:text-primary`}
+          className={`font-sans ${inter.variable} text-slate-950 dark:text-primary`}
         >
           <ThemeProvider
             attribute="class"
@@ -46,8 +46,10 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <TopNav />
-            {children}
+            <div className="grid h-screen grid-rows-[auto,1fr]">
+              <TopNav />
+              <main className="overflow-y-auto">{children}</main>
+            </div>
             {modal}
             <div id="modal-root" />
           </ThemeProvider>
