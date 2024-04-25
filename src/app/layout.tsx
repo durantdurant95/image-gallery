@@ -3,6 +3,7 @@ import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "src/app/_components/theme-provider";
 import { extractRouterConfig } from "uploadthing/server";
+import { Toaster } from "~/components/ui/sonner";
 import "~/styles/globals.css";
 import TopNav from "./_components/topnav";
 import { ourFileRouter } from "./api/uploadthing/core";
@@ -48,7 +49,10 @@ export default function RootLayout({
           >
             <div className="grid h-screen grid-rows-[auto,1fr]">
               <TopNav />
-              <main className="overflow-y-auto">{children}</main>
+              <main className="overflow-y-auto">
+                {children}
+                <Toaster />
+              </main>
             </div>
             {modal}
             <div id="modal-root" />
