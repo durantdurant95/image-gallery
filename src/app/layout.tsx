@@ -5,6 +5,7 @@ import { ThemeProvider } from "src/app/_components/theme-provider";
 import { extractRouterConfig } from "uploadthing/server";
 import { Toaster } from "~/components/ui/sonner";
 import "~/styles/globals.css";
+import { CSPostHogProvider } from "./_analytics/provider";
 import TopNav from "./_components/topnav";
 import { ourFileRouter } from "./api/uploadthing/core";
 
@@ -28,37 +29,39 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
-        <NextSSRPlugin
-          /**
-           * The `extractRouterConfig` will extract **only** the route configs
-           * from the router to prevent additional information from being
-           * leaked to the client. The data passed to the client is the same
-           * as if you were to fetch `/api/uploadthing` directly.
-           */
-          routerConfig={extractRouterConfig(ourFileRouter)}
-        />
-        <body
-          className={`font-sans ${inter.variable} text-slate-950 dark:text-primary`}
-        >
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
+      <CSPostHogProvider>
+        <html lang="en" suppressHydrationWarning>
+          <NextSSRPlugin
+            /**
+             * The `extractRouterConfig` will extract **only** the route configs
+             * from the router to prevent additional information from being
+             * leaked to the client. The data passed to the client is the same
+             * as if you were to fetch `/api/uploadthing` directly.
+             */
+            routerConfig={extractRouterConfig(ourFileRouter)}
+          />
+          <body
+            className={`font-sans ${inter.variable} text-slate-950 dark:text-primary`}
           >
-            <div className="grid h-screen grid-rows-[auto,1fr]">
-              <TopNav />
-              <main className="overflow-y-auto">
-                {children}
-                <Toaster />
-              </main>
-            </div>
-            {modal}
-            <div id="modal-root" />
-          </ThemeProvider>
-        </body>
-      </html>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <div className="grid h-screen grid-rows-[auto,1fr]">
+                <TopNav />
+                <main className="overflow-y-auto">
+                  {children}
+                  <Toaster />
+                </main>
+              </div>
+              {modal}
+              <div id="modal-root" />
+            </ThemeProvider>
+          </body>
+        </html>
+      </CSPostHogProvider>
     </ClerkProvider>
   );
 }
